@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}新开揉捻衔接单{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>新开揉捻衔接单</h1>
+  <a class="btn btn-secondary" href="{% url 'rolllink_list' %}">返回列表</a>
+</div>
+<div class="card">
+  <p class="muted">
+    开单条件：关联批次所属槽位当前为「可下槽」，且该批次已填写实测含水率且不超过 40%；
+    同一批次已有未关闭衔接单时不可再开。开单后该批次的实测含水率与揉捻等级将被锁定，
+    直至主管关闭本单。
+  </p>
+  <form method="post" class="form-grid">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-row">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}<p class="muted" style="margin:.25rem 0 0;font-size:.85rem">{{ field.help_text }}</p>{% endif %}
+      {{ field.errors }}
+    </div>
+    {% endfor %}
+    {{ form.non_field_errors }}
+    <button class="btn" type="submit">开单</button>
+  </form>
+</div>
+{% endblock %}

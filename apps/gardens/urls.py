@@ -40,4 +40,19 @@ urlpatterns = [
         views.BatchDeleteView.as_view(),
         name="batch_delete",
     ),
+    path(
+        "roll-links/",
+        views.RollLinkListView.as_view(),
+        name="rolllink_list",
+    ),
+    path(
+        "roll-links/new/",
+        views.RollLinkCreateView.as_view(),
+        name="rolllink_create",
+    ),
+    path(
+        "roll-links/<int:pk>/close/",
+        views.RollLinkCloseView.as_view(),
+        name="rolllink_close",
+    ),
 ]

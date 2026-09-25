@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Garden, Trough, WitherBatch
+from .models import Garden, RollLink, Trough, WitherBatch
 
 
 @admin.register(Garden)
@@ -27,3 +27,19 @@ class WitherBatchAdmin(admin.ModelAdmin):
         "rollGrade",
     )
     list_filter = ("rollGrade",)
+
+
+@admin.register(RollLink)
+class RollLinkAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "batch",
+        "rollerNo",
+        "plannedRolls",
+        "openedAt",
+        "openedBy",
+        "closedAt",
+        "closedBy",
+    )
+    list_filter = ("closedAt",)
+    raw_id_fields = ("batch", "openedBy", "closedBy")

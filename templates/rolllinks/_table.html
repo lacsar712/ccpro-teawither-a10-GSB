@@ -1,0 +1,46 @@
+{% if rolllinks %}
+<table class="data">
+  <thead>
+    <tr>
+      <th>关联批次（茶园/槽位/开始时间）</th>
+      <th>揉捻机号</th>
+      <th>计划揉次</th>
+      <th>开单时刻</th>
+      <th>开单人</th>
+      <th>关闭时刻</th>
+      <th>关闭人</th>
+      <th>状态/操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for l in rolllinks %}
+    <tr>
+      <td>
+        {{ l.batch.trough.garden.name }} / {{ l.batch.trough.troughCode }}
+        / {{ l.batch.startedAt|date:"Y-m-d H:i" }}
+      </td>
+      <td>{{ l.rollerNo }}</td>
+      <td>{{ l.plannedRolls }}</td>
+      <td>{{ l.openedAt|date:"Y-m-d H:i" }}</td>
+      <td>{{ l.openedBy.username }}</td>
+      <td>{% if l.closedAt %}{{ l.closedAt|date:"Y-m-d H:i" }}{% else %}—{% endif %}</td>
+      <td>{% if l.closedBy %}{{ l.closedBy.username }}{% else %}—{% endif %}</td>
+      <td class="actions">
+        {% if l.closedAt %}
+          <span class="badge badge-closed">已关闭</span>
+        {% else %}
+          <span class="badge badge-open">未关闭</span>
+          {% if user.is_staff %}
+          <a class="btn btn-sm btn-secondary" href="{% url 'rolllink_close' l.pk %}">关闭</a>
+          {% else %}
+          <span class="muted">仅主管可关闭</span>
+          {% endif %}
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="empty">暂无揉捻衔接单。</p>
+{% endif %}

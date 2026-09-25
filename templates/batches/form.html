@@ -6,6 +6,11 @@
   <a class="btn btn-secondary" href="{% url 'batch_list' %}">返回列表</a>
 </div>
 <div class="card">
+  {% if form.roll_locked %}
+  <p class="messages" style="margin-top:0">
+    <li class="error">该批次存在未关闭的揉捻衔接单：实测含水率与揉捻等级已锁定，关闭衔接单后恢复可改（后端强制，绕过页面提交同样拒绝）。</li>
+  </p>
+  {% endif %}
   <form method="post" class="form-grid">
     {% csrf_token %}
     {% for field in form %}

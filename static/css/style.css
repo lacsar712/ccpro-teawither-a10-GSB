@@ -169,6 +169,17 @@ a:hover {
   font-size: 0.9rem;
 }
 
+a.stat-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+a.stat-link:hover {
+  border-color: var(--tea-green);
+  box-shadow: 0 1px 6px rgba(47, 107, 58, 0.18);
+}
+
 table.data {
   width: 100%;
   border-collapse: collapse;
@@ -214,6 +225,21 @@ table.data tr:hover td {
 .badge-ready {
   background: #cce5ff;
   color: #004085;
+}
+
+.badge-open {
+  background: #fdecea;
+  color: #a94442;
+}
+
+.badge-closed {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.badge-locked {
+  background: #fff3cd;
+  color: #856404;
 }
 
 .form-grid {
