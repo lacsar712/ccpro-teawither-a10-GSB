@@ -72,6 +72,20 @@ a:hover {
   text-decoration: none;
 }
 
+.topnav .nav-badge {
+  display: inline-block;
+  min-width: 1.15rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: #b33a3a;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.15rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
 .topnav .nav-user {
   display: flex;
   align-items: center;

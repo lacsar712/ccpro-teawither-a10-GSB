@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}编辑衔接单{% else %}新开揉捻衔接单{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>{% if object %}编辑揉捻衔接单{% else %}新开揉捻衔接单{% endif %}</h1>
+  <a class="btn btn-secondary" href="{% url 'rolllink_list' %}">返回列表</a>
+</div>
+<div class="card">
+  <form method="post" class="form-grid">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-row">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}<div class="muted" style="font-size:.85rem">{{ field.help_text }}</div>{% endif %}
+      {{ field.errors }}
+    </div>
+    {% endfor %}
+    {{ form.non_field_errors }}
+    {% if not object %}
+    <p class="muted" style="font-size:.9rem">
+      开单条件：批次所属槽位须为「可下槽」，且该批次已填写不超过 40% 的实测含水率。
+      开单后该批次的实测含水率与揉捻等级将被锁定，关闭衔接单后恢复可改。
+    </p>
+    {% endif %}
+    <button class="btn" type="submit">保存</button>
+  </form>
+</div>
+{% endblock %}

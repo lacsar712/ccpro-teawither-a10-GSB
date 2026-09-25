@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}关闭衔接单{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>关闭揉捻衔接单</h1>
+  <a class="btn btn-secondary" href="{% url 'rolllink_list' %}">返回列表</a>
+</div>
+<div class="card">
+  <p>确认关闭以下揉捻衔接单？关闭后该批次的实测含水率与揉捻等级恢复可改。</p>
+  <table class="data" style="margin-bottom:1rem">
+    <tr><th>关联批次</th><td>{{ object.batch.trough.garden.name }} / {{ object.batch.trough.troughCode }}（{{ object.batch.startedAt|date:"Y-m-d H:i" }}）</td></tr>
+    <tr><th>揉捻机号</th><td>{{ object.rollerNo }}</td></tr>
+    <tr><th>计划揉次</th><td>{% if object.plannedRolls != None %}{{ object.plannedRolls }}{% else %}<span style="color:var(--danger)">未填写</span>{% endif %}</td></tr>
+    <tr><th>开单时刻</th><td>{{ object.openedAt|date:"Y-m-d H:i" }}</td></tr>
+    <tr><th>开单人</th><td>{{ object.openedBy.username }}</td></tr>
+  </table>
+  {% if object.plannedRolls == None or object.plannedRolls <= 0 %}
+  <p class="errorlist" style="margin-bottom:1rem">计划揉次须为正整数，请先
+    <a href="{% url 'rolllink_edit' object.pk %}">编辑衔接单</a> 填写后再关闭。
+  </p>
+  {% endif %}
+  <form method="post" class="actions">
+    {% csrf_token %}
+    <button class="btn" type="submit"
+            {% if object.plannedRolls == None or object.plannedRolls <= 0 %}disabled{% endif %}>
+      确认关闭
+    </button>
+    <a class="btn btn-secondary" href="{% url 'rolllink_list' %}">取消</a>
+  </form>
+</div>
+{% endblock %}

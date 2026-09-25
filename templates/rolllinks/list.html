@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}揉捻衔接{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>揉捻衔接单</h1>
+  <div class="actions">
+    <button class="btn btn-secondary btn-sm"
+            hx-get="{% url 'rolllink_list' %}"
+            hx-target="#rolllink-table"
+            hx-swap="innerHTML">刷新列表</button>
+    <a class="btn" href="{% url 'rolllink_create' %}">新开衔接单</a>
+  </div>
+</div>
+<p class="muted">
+  未关闭衔接单：<strong>{{ open_count }}</strong> 张
+  （与首页「未关闭揉捻衔接」计数一致）。未关闭期间，对应批次的实测含水率与揉捻等级锁定，关闭仅主管可操作。
+</p>
+<div class="card" id="rolllink-table">
+  {% include "rolllinks/_table.html" %}
+</div>
+{% endblock %}

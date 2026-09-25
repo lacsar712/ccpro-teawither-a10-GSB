@@ -11,6 +11,15 @@
   <div class="stat"><div class="num">{{ loading_count }}</div><div class="label">装叶中</div></div>
   <div class="stat"><div class="num">{{ withering_count }}</div><div class="label">萎凋中</div></div>
   <div class="stat"><div class="num">{{ ready_count }}</div><div class="label">可下槽</div></div>
+  <a class="stat" href="{% url 'rolllink_list' %}" style="text-decoration:none">
+    <div class="num">{{ open_roll_link_count }}</div>
+    <div class="label">未关闭揉捻衔接</div>
+  </a>
 </div>
-<p class="muted" style="margin-top:1.25rem">规则提示：槽位设为「可下槽」时，最新批次实测含水率须已填写且不超过 40%。</p>
+<p class="muted" style="margin-top:1.25rem">
+  规则提示：槽位设为「可下槽」时，最新批次实测含水率须已填写且不超过 40%。<br>
+  揉捻衔接：批次所属槽可下槽、实测含水已填且不超过 40% 方可开单；同一批次未关闭衔接单前不可再开单。
+  衔接单<strong>未关闭期间，该批次的实测含水率与揉捻等级被锁定（后端拒绝修改）</strong>，
+  关闭仅主管可操作，且关闭前计划揉次须为正整数；关闭后字段恢复可改。
+</p>
 {% endblock %}

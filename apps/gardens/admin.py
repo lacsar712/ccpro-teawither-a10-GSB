@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Garden, Trough, WitherBatch
+from .models import Garden, RollLink, Trough, WitherBatch
 
 
 @admin.register(Garden)
@@ -25,5 +25,26 @@ class WitherBatchAdmin(admin.ModelAdmin):
         "targetMoisture",
         "actualMoisture",
         "rollGrade",
+        "rolling_lock",
     )
     list_filter = ("rollGrade",)
+    readonly_fields = ("rolling_lock",)
+
+    @admin.display(description="揉捻衔接锁定", boolean=True)
+    def rolling_lock(self, obj):
+        return obj.pk is not None and obj.is_locked_for_rolling()
+
+
+@admin.register(RollLink)
+class RollLinkAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "batch",
+        "rollerNo",
+        "plannedRolls",
+        "openedAt",
+        "closedAt",
+        "openedBy",
+    )
+    list_filter = ("closedAt",)
+    search_fields = ("rollerNo",)

@@ -5,6 +5,12 @@
   <h1>{% if object %}编辑萎凋批次{% else %}新建萎凋批次{% endif %}</h1>
   <a class="btn btn-secondary" href="{% url 'batch_list' %}">返回列表</a>
 </div>
+{% if object and object.is_locked_for_rolling %}
+<div class="card" style="margin-bottom:1rem;border-color:#f5c6cb;background:#fdecea">
+  🔒 该批次存在<strong>未关闭的揉捻衔接单</strong>，<strong>实测含水率、揉捻等级已由后端锁定</strong>，
+  任何提交都无法修改；待主管关闭衔接单后恢复可改。
+</div>
+{% endif %}
 <div class="card">
   <form method="post" class="form-grid">
     {% csrf_token %}
@@ -12,6 +18,7 @@
     <div class="form-row">
       <label for="{{ field.id_for_label }}">{{ field.label }}</label>
       {{ field }}
+      {% if field.help_text %}<div class="muted" style="font-size:.85rem">{{ field.help_text }}</div>{% endif %}
       {{ field.errors }}
     </div>
     {% endfor %}
